@@ -79,22 +79,24 @@ function dropDB {
 }
 
 function tablesMenu {
-  echo -e "\n+--------Tables Menu------------+"
-  echo "| 1. Show Existing Tables       |"
-  echo "| 2. Create New Table           |"
-  echo "| 3. Insert Into Table          |"
-  echo "| 4. Select From Table          |"
-  echo "| 5. Update Table               |"
-  echo "| 6. Delete From Table          |"
-  echo "| 7. Drop Table                 |"
-  echo "| 8. Back To Main Menu          |"
-  echo "| 9. Exit                       |"
-  echo "+-------------------------------+"
-  echo -e "Enter Choice: \c"
+  select option in "CreateTable" "list tables"  "drop table" "select from table" "Update table" "Delete From Table" "Exit"
+    do 
+  # echo -e "\n+--------Tables Menu------------+"
+  # echo "| 1. Show Existing Tables       |"
+  # echo "| 2. Create New Table           |"
+  # echo "| 3. Insert Into Table          |"
+  # echo "| 4. Select From Table          |"
+  # echo "| 5. Update Table               |"
+  # echo "| 6. Delete From Table          |"
+  # echo "| 7. Drop Table                 |"
+  # echo "| 8. Back To Main Menu          |"
+  # echo "| 9. Exit                       |"
+  # echo "+-------------------------------+"
+  echo  "Enter Choice: "
   read ch
   case $ch in
-    1)  ls .; tablesMenu ;;
-    2)  createTable ;;
+    1)  createTable ;;
+    2)  ls .; tablesMenu ;;
     3)  insert;;
     4)  clear; selectMenu ;;
     5)  updateTable;;
@@ -102,9 +104,9 @@ function tablesMenu {
     7)  dropTable;;
     8) clear; cd ../.. 2>>./.error.log; mainMenu ;;
     9) exit ;;
-    *) echo " Wrong Choice " ; tablesMenu;
+    *) echo " Wrong Choice, please choose again " ; tablesMenu;
   esac
-
+done
 }
 
 function createTable {
