@@ -1,8 +1,7 @@
 #!/bin/bash
-  echo -e "Table Name: \c"
-  read tabname
+  read -p "Table Name: " tabname
   if ! [[ -f $tabname ]]; then
-    echo "Table $tabname isn't existed ,choose another Table"
+    echo "Table $tabname isn't existed ,choose another table"
     tablesMenu
   fi
   colnum=`awk 'END{print NR}' .$tabname.meta`
@@ -12,10 +11,9 @@
     colname=$(awk 'BEGIN{FS=":"}{ if(NR=='$i') print $1}' .$tabname.meta)
     coltype=$( awk 'BEGIN{FS=":"}{if(NR=='$i') print $2}' .$tabname.meta)
     colKey=$( awk 'BEGIN{FS=":"}{if(NR=='$i') print $3}' .$tabname.meta)
-    echo -e "$colname ($coltype) = \c"
-    read data
+    read -p "$colname ($coltype) = " data
 
-    # Validate Input
+
     if [[ $coltype == "int" ]]; then
       while ! [[ $data =~ ^[0-9]*$ ]]; do
         echo -e "invalid DataType !!"
@@ -36,7 +34,6 @@
       done
     fi
 
-    #Set row
     if [[ $i == $colnum ]]; then
       row=$row$data$rowsep
     else
@@ -51,4 +48,3 @@
     echo "Error Inserting Data into Table $tabname"
   fi
   row=""
-  tablesMenu
