@@ -1,5 +1,4 @@
 #!/bin/bash
-function insert {
   echo -e "Table Name: \c"
   read tableName
   if ! [[ -f $tableName ]]; then
@@ -7,12 +6,12 @@ function insert {
     tablesMenu
   fi
   colsNum=`awk 'END{print NR}' .$tableName`
-  sep="|"
+  sep=":"
   rSep="\n"
   for (( i = 2; i <= $colsNum; i++ )); do
-    colName=$(awk 'BEGIN{FS="|"}{ if(NR=='$i') print $1}' .$tableName)
-    colType=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $2}' .$tableName)
-    colKey=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $3}' .$tableName)
+    colName=$(awk 'BEGIN{FS=":"}{ if(NR=='$i') print $1}' .$tableName)
+    colType=$( awk 'BEGIN{FS=":"}{if(NR=='$i') print $2}' .$tableName)
+    colKey=$( awk 'BEGIN{FS=":"}{if(NR=='$i') print $3}' .$tableName)
     echo -e "$colName ($colType) = \c"
     read data
 
@@ -27,7 +26,7 @@ function insert {
 
     if [[ $colKey == "PK" ]]; then
       while [[ true ]]; do
-        if [[ $data =~ ^[`awk 'BEGIN{FS="|" ; ORS=" "}{if(NR != 1)print $(('$i'-1))}' $tableName`]$ ]]; then
+        if [[ $data =~ ^[`awk 'BEGIN{FS=":" ; ORS=" "}{if(NR != 1)print $(('$i'-1))}' $tableName`]$ ]]; then
           echo -e "invalid input for Primary Key !!"
         else
           break;
@@ -53,4 +52,3 @@ function insert {
   fi
   row=""
   tablesMenu
-}

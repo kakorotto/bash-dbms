@@ -1,14 +1,8 @@
 #!/bin/bash
 
+pwd
+
 # mkdir DBMS 2>> ./.error.log
-#   echo -e "\n+---------Main Menu-------------+"
-#   echo "| 1. Select DB                  |"
-#   echo "| 2. Create DB                  |"
-#   echo "| 3. Rename DB                  |"
-#   echo "| 4. Drop DB                    |"
-#   echo "| 5. Show DBs                   |"
-#   echo "| 6. Exit                       |"
-#   echo "+-------------------------------+"
 #  echo -e "Enter Choice: \c"
 # read ch
   

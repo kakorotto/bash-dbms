@@ -1,5 +1,4 @@
 #!/bin/bash
-function dropTable {
   echo -e "Enter Table Name: \c"
   read tName
   rm $tName .$tName 2>>./.error.log
@@ -10,4 +9,3 @@ function dropTable {
     echo "Error Dropping Table $tName"
   fi
   tablesMenu
-}

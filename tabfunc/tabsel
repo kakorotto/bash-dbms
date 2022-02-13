@@ -40,7 +40,7 @@ function selectCol {
   read tName
   echo -e "Enter Column Number: \c"
   read colNum
-  awk 'BEGIN{FS="|"}{print $'$colNum'}' $tName
+  awk 'BEGIN{FS=":"}{print $'$colNum'}' $tName
   selectMenu
 }
 
@@ -70,7 +70,7 @@ function allCond {
   read tName
   echo -e "Enter required FIELD name: \c"
   read field
-  fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
+  fid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
@@ -82,13 +82,13 @@ function allCond {
     then
       echo -e "\nEnter required VALUE: \c"
       read val
-      res=$(awk 'BEGIN{FS="|"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|')
+      res=$(awk 'BEGIN{FS=":"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|')
       if [[ $res == "" ]]
       then
         echo "Value Not Found"
         selectCon
       else
-        awk 'BEGIN{FS="|"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|'
+        awk 'BEGIN{FS=":"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|'
         selectCon
       fi
     else
@@ -104,7 +104,7 @@ function specCond {
   read tName
   echo -e "Enter required FIELD name: \c"
   read field
-  fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
+  fid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
@@ -116,13 +116,13 @@ function specCond {
     then
       echo -e "\nEnter required VALUE: \c"
       read val
-      res=$(awk 'BEGIN{FS="|"; ORS="\n"}{if ($'$fid$op$val') print $'$fid'}' $tName 2>>./.error.log |  column -t -s '|')
+      res=$(awk 'BEGIN{FS=":"; ORS="\n"}{if ($'$fid$op$val') print $'$fid'}' $tName 2>>./.error.log |  column -t -s '|')
       if [[ $res == "" ]]
       then
         echo "Value Not Found"
         selectCon
       else
-        awk 'BEGIN{FS="|"; ORS="\n"}{if ($'$fid$op$val') print $'$fid'}' $tName 2>>./.error.log |  column -t -s '|'
+        awk 'BEGIN{FS=":"; ORS="\n"}{if ($'$fid$op$val') print $'$fid'}' $tName 2>>./.error.log |  column -t -s '|'
         selectCon
       fi
     else

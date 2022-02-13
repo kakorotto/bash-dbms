@@ -117,7 +117,7 @@ function createTable {
   echo -e "Number of Columns: \c"
   read colsNum
   counter=1
-  sep="|"
+  sep=":"
   rSep="\n"
   pKey=""
   metaData="Field"$sep"Type"$sep"key"
@@ -194,12 +194,12 @@ function insert {
     tablesMenu
   fi
   colsNum=`awk 'END{print NR}' .$tableName`
-  sep="|"
+  sep=":"
   rSep="\n"
   for (( i = 2; i <= $colsNum; i++ )); do
-    colName=$(awk 'BEGIN{FS="|"}{ if(NR=='$i') print $1}' .$tableName)
-    colType=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $2}' .$tableName)
-    colKey=$( awk 'BEGIN{FS="|"}{if(NR=='$i') print $3}' .$tableName)
+    colName=$(awk 'BEGIN{FS=":"}{ if(NR=='$i') print $1}' .$tableName)
+    colType=$( awk 'BEGIN{FS=":"}{if(NR=='$i') print $2}' .$tableName)
+    colKey=$( awk 'BEGIN{FS=":"}{if(NR=='$i') print $3}' .$tableName)
     echo -e "$colName ($colType) = \c"
     read data
 
@@ -214,7 +214,7 @@ function insert {
 
     if [[ $colKey == "PK" ]]; then
       while [[ true ]]; do
-        if [[ $data =~ ^[`awk 'BEGIN{FS="|" ; ORS=" "}{if(NR != 1)print $(('$i'-1))}' $tableName`]$ ]]; then
+        if [[ $data =~ ^[`awk 'BEGIN{FS=":" ; ORS=" "}{if(NR != 1)print $(('$i'-1))}' $tableName`]$ ]]; then
           echo -e "invalid input for Primary Key !!"
         else
           break;
@@ -247,7 +247,7 @@ function updateTable {
   read tName
   echo -e "Enter Condition Column name: \c"
   read field
-  fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
+  fid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
@@ -255,7 +255,7 @@ function updateTable {
   else
     echo -e "Enter Condition Value: \c"
     read val
-    res=$(awk 'BEGIN{FS="|"}{if ($'$fid'=="'$val'") print $'$fid'}' $tName 2>>./.error.log)
+    res=$(awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print $'$fid'}' $tName 2>>./.error.log)
     if [[ $res == "" ]]
     then
       echo "Value Not Found"
@@ -263,7 +263,7 @@ function updateTable {
     else
       echo -e "Enter FIELD name to set: \c"
       read setField
-      setFid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$setField'") print i}}}' $tName)
+      setFid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$setField'") print i}}}' $tName)
       if [[ $setFid == "" ]]
       then
         echo "Not Found"
@@ -271,8 +271,8 @@ function updateTable {
       else
         echo -e "Enter new Value to set: \c"
         read newValue
-        NR=$(awk 'BEGIN{FS="|"}{if ($'$fid' == "'$val'") print NR}' $tName 2>>./.error.log)
-        oldValue=$(awk 'BEGIN{FS="|"}{if(NR=='$NR'){for(i=1;i<=NF;i++){if(i=='$setFid') print $i}}}' $tName 2>>./.error.log)
+        NR=$(awk 'BEGIN{FS=":"}{if ($'$fid' == "'$val'") print NR}' $tName 2>>./.error.log)
+        oldValue=$(awk 'BEGIN{FS=":"}{if(NR=='$NR'){for(i=1;i<=NF;i++){if(i=='$setFid') print $i}}}' $tName 2>>./.error.log)
         echo $oldValue
         sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tName 2>>./.error.log
         echo "Row Updated Successfully"
@@ -287,7 +287,7 @@ function deleteFromTable {
   read tName
   echo -e "Enter Condition Column name: \c"
   read field
-  fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
+  fid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
@@ -295,13 +295,13 @@ function deleteFromTable {
   else
     echo -e "Enter Condition Value: \c"
     read val
-    res=$(awk 'BEGIN{FS="|"}{if ($'$fid'=="'$val'") print $'$fid'}' $tName 2>>./.error.log)
+    res=$(awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print $'$fid'}' $tName 2>>./.error.log)
     if [[ $res == "" ]]
     then
       echo "Value Not Found"
       tablesMenu
     else
-      NR=$(awk 'BEGIN{FS="|"}{if ($'$fid'=="'$val'") print NR}' $tName 2>>./.error.log)
+      NR=$(awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print NR}' $tName 2>>./.error.log)
       sed -i ''$NR'd' $tName 2>>./.error.log
       echo "Row Deleted Successfully"
       tablesMenu
@@ -349,7 +349,7 @@ function selectCol {
   read tName
   echo -e "Enter Column Number: \c"
   read colNum
-  awk 'BEGIN{FS="|"}{print $'$colNum'}' $tName
+  awk 'BEGIN{FS=":"}{print $'$colNum'}' $tName
   selectMenu
 }
 
@@ -379,7 +379,7 @@ function allCond {
   read tName
   echo -e "Enter required FIELD name: \c"
   read field
-  fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
+  fid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
@@ -391,13 +391,13 @@ function allCond {
     then
       echo -e "\nEnter required VALUE: \c"
       read val
-      res=$(awk 'BEGIN{FS="|"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|')
+      res=$(awk 'BEGIN{FS=":"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|')
       if [[ $res == "" ]]
       then
         echo "Value Not Found"
         selectCon
       else
-        awk 'BEGIN{FS="|"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|'
+        awk 'BEGIN{FS=":"}{if ($'$fid$op$val') print $0}' $tName 2>>./.error.log |  column -t -s '|'
         selectCon
       fi
     else
@@ -413,7 +413,7 @@ function specCond {
   read tName
   echo -e "Enter required FIELD name: \c"
   read field
-  fid=$(awk 'BEGIN{FS="|"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
+  fid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
@@ -425,13 +425,13 @@ function specCond {
     then
       echo -e "\nEnter required VALUE: \c"
       read val
-      res=$(awk 'BEGIN{FS="|"; ORS="\n"}{if ($'$fid$op$val') print $'$fid'}' $tName 2>>./.error.log |  column -t -s '|')
+      res=$(awk 'BEGIN{FS=":"; ORS="\n"}{if ($'$fid$op$val') print $'$fid'}' $tName 2>>./.error.log |  column -t -s '|')
       if [[ $res == "" ]]
       then
         echo "Value Not Found"
         selectCon
       else
-        awk 'BEGIN{FS="|"; ORS="\n"}{if ($'$fid$op$val') print $'$fid'}' $tName 2>>./.error.log |  column -t -s '|'
+        awk 'BEGIN{FS=":"; ORS="\n"}{if ($'$fid$op$val') print $'$fid'}' $tName 2>>./.error.log |  column -t -s '|'
         selectCon
       fi
     else

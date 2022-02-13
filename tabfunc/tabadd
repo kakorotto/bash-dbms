@@ -1,5 +1,4 @@
 #!/bin/bash
-function createTable {
   echo -e "Table Name: \c"
   read tableName
   if [[ -f $tableName ]]; then
@@ -9,7 +8,7 @@ function createTable {
   echo -e "Number of Columns: \c"
   read colsNum
   counter=1
-  sep="|"
+  sep=":"
   rSep="\n"
   pKey=""
   metaData="Field"$sep"Type"$sep"key"
@@ -63,4 +62,3 @@ function createTable {
     echo "Error Creating Table $tableName"
     tablesMenu
   fi
-}
