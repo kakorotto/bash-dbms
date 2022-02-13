@@ -50,3 +50,6 @@ mkdir: cannot create directory ‘DBMS’: File exists
 mkdir: cannot create directory ‘DBMS’: File exists
 mkdir: cannot create directory ‘DBMS’: File exists
 ./dbfunc/dbcnn: line 4: cd: ./DBMS/dnf: No such file or directory
+./dbfunc/dbcnn: line 4: cd: ./DBMS/dnf: No such file or directory
+./dbfunc/dbcnn: line 4: cd: ./DBMS/dnf: No such file or directory
+./dbfunc/dbcnn: line 4: cd: ./DBMS/dnf: No such file or directory
