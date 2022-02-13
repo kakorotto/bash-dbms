@@ -1,7 +1,7 @@
 #!/bin/bash
   echo -e "Enter Database Name: \c"
   read dbName
-  rm -r ./DBMS/$dbName 2>>./.error.log
+  rm -r ./DBMS/$dbName 2>/dev/null
   if [[ $? == 0 ]]; then
     echo "Database Dropped Successfully"
   else

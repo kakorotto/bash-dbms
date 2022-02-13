@@ -1,2 +1,3 @@
 Field:Type:key
 col1:int:PK
+col1:int:

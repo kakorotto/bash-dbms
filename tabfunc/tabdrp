@@ -1,7 +1,7 @@
 #!/bin/bash
   echo -e "Enter Table Name: \c"
   read tName
-  rm $tName .$tName 2>>./.error.log
+  rm $tName .$tName 2>/dev/null
   if [[ $? == 0 ]]
   then
     echo "Table Dropped Successfully"

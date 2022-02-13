@@ -1,7 +1,7 @@
 #!/bin/bash
   # echo -e "Enter Database Name: \c"
   read -p "Enter Database Name: " dbName
-  cd ./DBMS/$dbName 2>>./.error.log
+  cd ./DBMS/$dbName 2>/dev/null
   if [[ $? == 0 ]]; then
     echo "Database $dbName was Successfully Selected"
     bash ../../tabsmenu

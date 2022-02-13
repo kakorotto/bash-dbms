@@ -1,16 +1,16 @@
 #!/bin/bash
-  echo -e "Enter Table Name: \c"
-  read tName
-  echo -e "Enter Condition Column name: \c"
-  read field
+  read -p "Enter Table Name: " tName
+   
+  read -p "Enter Condition Column name: " field 
+  
   fid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
   if [[ $fid == "" ]]
   then
     echo "Not Found"
   else
-    echo -e "Enter Condition Value: \c"
-    read val
-    res=$(awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print $'$fid'}' $tName 2>>./.error.log)
+    read -p "Enter Condition Value: " val
+    
+    res=$(awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print $'$fid'}' $tName 2>/dev/null)
     if [[ $res == "" ]]
     then
       echo "Value Not Found"
@@ -24,10 +24,10 @@
       else
         echo -e "Enter new Value to set: \c"
         read newValue
-        NR=$(awk 'BEGIN{FS=":"}{if ($'$fid' == "'$val'") print NR}' $tName 2>>./.error.log)
-        oldValue=$(awk 'BEGIN{FS=":"}{if(NR=='$NR'){for(i=1;i<=NF;i++){if(i=='$setFid') print $i}}}' $tName 2>>./.error.log)
+        NR=$(awk 'BEGIN{FS=":"}{if ($'$fid' == "'$val'") print NR}' $tName 2>/dev/null)
+        oldValue=$(awk 'BEGIN{FS=":"}{if(NR=='$NR'){for(i=1;i<=NF;i++){if(i=='$setFid') print $i}}}' $tName 2>/dev/null)
         echo $oldValue
-        sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tName 2>>./.error.log
+        sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tName 2>/dev/null
         echo "Row Updated Successfully"
       fi
     fi
