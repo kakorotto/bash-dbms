@@ -1,33 +1,27 @@
 #!/bin/bash
-  read -p "Enter Table Name: " tName
-   
+  read -p "Enter Table Name: " tabname
   read -p "Enter Condition Column name: " field 
-  
-  fid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName)
-  if [[ $fid == "" ]]
-  then
+  fid=`awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tabname`
+  if [[ $fid == "" ]]; then
     echo "Not Found"
   else
     read -p "Enter Condition Value: " val
-    
-    res=$(awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print $'$fid'}' $tName 2>/dev/null)
-    if [[ $res == "" ]]
-    then
+    res=`awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print $'$fid'}' $tabname 2>/dev/null`
+    if [[ $res == "" ]]; then
       echo "Value Not Found"
     else
       echo -e "Enter FIELD name to set: \c"
       read setField
-      setFid=$(awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$setField'") print i}}}' $tName)
-      if [[ $setFid == "" ]]
-      then
+      setFid=`awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$setField'") print i}}}' $tabname`
+      if [[ $setFid == "" ]]; then
         echo "Not Found"
       else
         echo -e "Enter new Value to set: \c"
         read newValue
-        NR=$(awk 'BEGIN{FS=":"}{if ($'$fid' == "'$val'") print NR}' $tName 2>/dev/null)
-        oldValue=$(awk 'BEGIN{FS=":"}{if(NR=='$NR'){for(i=1;i<=NF;i++){if(i=='$setFid') print $i}}}' $tName 2>/dev/null)
+        NR=`awk 'BEGIN{FS=":"}{if ($'$fid' == "'$val'") print NR}' $tabname 2>/dev/null`
+        oldValue=`awk 'BEGIN{FS=":"}{if(NR=='$NR'){for(i=1;i<=NF;i++){if(i=='$setFid') print $i}}}' $tabname 2>/dev/null`
         echo $oldValue
-        sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tName 2>/dev/null
+        sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tabname 2>/dev/null
         echo "Row Updated Successfully"
       fi
     fi

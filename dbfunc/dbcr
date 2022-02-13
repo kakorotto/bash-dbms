@@ -1,12 +1,11 @@
 #!/bin/bash
-  echo -e "Enter Database Name: \c"
-  read dbName
-  mkdir ./DBMS/$dbName 2>> err.log
+  read -p "Enter Database Name: " dbname
+  mkdir ./DB/$dbname 2>> /dev/null
   if [[ $? == 0 ]]
   then
     echo "Database Created Successfully"
     bash main
   else
-    echo "Error Creating Database $dbName"
+    echo "Error Creating Database $dbname"
     bash main
   fi

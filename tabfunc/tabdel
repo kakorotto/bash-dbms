@@ -1,19 +1,17 @@
 #!/bin/bash
-  read -p "Enter Table Name: " tName
+  read -p "Enter Table Name: " tabname
   read -p "Enter Condition Column name: " field
-  fid=`awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tName`
-  if [[ $fid == "" ]]
-  then
+  fid=`awk 'BEGIN{FS=":"}{if(NR==1){for(i=1;i<=NF;i++){if($i=="'$field'") print i}}}' $tabname`
+  if [[ $fid == "" ]]; then
     echo "Not Found"
   else
     read -p "Enter Condition Value: " val
-    res=`awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print $'$fid'}' $tName 2>/dev/null`
-    if [[ $res == "" ]]
-    then
+    res=`awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print $'$fid'}' $tabname 2>/dev/null`
+    if [[ $res == "" ]]; then
       echo "Value Not Found"
     else
-      NR=`awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print NR}' $tName 2>/dev/null`
-      sed -i ''$NR'd' $tName 2>/dev/null
+      NR=`awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print NR}' $tabname 2>/dev/null`
+      sed -i ''$NR'd' $tabname 2>/dev/null
       echo "Row Deleted Successfully"
     fi
   fi

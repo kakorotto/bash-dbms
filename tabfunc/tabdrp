@@ -1,10 +1,11 @@
 #!/bin/bash
-  echo -e "Enter Table Name: \c"
-  read tName
-  rm $tName .$tName 2>/dev/null
-  if [[ $? == 0 ]]
-  then
+  read -p "Enter Table Name: " tabname
+  read -p "Enter y to remove $tabname :" inp
+  if [[ "y" == "$inp" ]]; then
+  rm -r $tabname .$tabname.meta 2>/dev/null
+  fi
+  if [[ $? == 0 ]]; then
     echo "Table Dropped Successfully"
   else
-    echo "Error Dropping Table $tName"
+    echo "Error Dropping Table $tabname"
   fi

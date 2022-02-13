@@ -2,7 +2,7 @@
 
 pwd
 
-# mkdir DBMS 2>> ./.error.log
+mkdir DB 2>/dev/null
 #  echo -e "Enter Choice: \c"
 # read ch
   
@@ -15,6 +15,6 @@ do
     3) bash ./dbfunc/dbcnn ;;
     4) bash ./dbfunc/dbdrp ;;
     5) exit ;;
-    *) echo " Wrong Choice " ; bash main ;;
+    *) echo "\n\t\tWrong! \n\ttry again\n" ; bash main ;;
   esac
 done

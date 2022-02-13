@@ -1,62 +1,64 @@
 #!/bin/bash
 echo tablecreate
 pwd
-  echo -e "Table Name: \c"
-  read tableName
-  if [[ -f $tableName ]]; then
+  read -p "Table Name: " tabname
+  if [[ -f $tabname ]]; then
     echo "table already existed ,choose another name"
     bash ../../tabsmenu
   fi
-  echo -e "Number of Columns: \c"
-  read colsNum
-  counter=1
+  read  -p "Number of Columns: " colnum
+  i=1
   sep=":"
   rowsep="\n"
-  pKey=""
+  pk=""
   metaData="Field"$sep"Type"$sep"key"
-  while [ $counter -le $colsNum ]
+  while [ $i -le $colnum ]
   do
-    read -p "Name of Column No.$counter: " colName
-    echo "Type of Column $colName: "
-    select var in "int" "str"
+    read -p "Name of column No $i: " colname
+    echo "Type of column $colname: "
+    select typeselector in "int" "str"
     do
-      case $var in
-        int ) colType="int";break;;
-        str ) colType="str";break;;
-        * ) echo "Wrong Choice" ;;
+      case $REPLY in
+        1) coltype="int";break;;
+        2) coltype="str";break;;
+        * ) echo -e "\n\t\tWrong! \n\ttry again\n" ;;
       esac
     done
-    if [[ $pKey == "" ]]; then
-      echo 'Make PrimaryKey?'
-      select var in "yes" "no"
+    if [[ $pk == "" ]]; then
+      echo 'Make PK?'
+      select pkselector in "yes" "no"
       do
-        case $var in
-          yes ) pKey="PK";
-          metaData+=$rowsep$colName$sep$colType$sep$pKey;
+        case $REPLY in
+          1) pk="PK";
+          metaData+=$rowsep$colname$sep$coltype$sep$pk;
           break;;
-          no )
-          metaData+=$rowsep$colName$sep$colType$sep""
+          2)
+          metaData+=$rowsep$colname$sep$coltype$sep""
           break;;
-          * ) echo "Wrong Choice" ;;
+          *) echo -e "\n\t\tWrong! \n\ttry again\n" ;;
         esac
       done
     else
-      metaData+=$rowsep$colName$sep$colType$sep""
+      metaData+=$rowsep$colname$sep$coltype$sep""
     fi
-    if [[ $counter == $colsNum ]]; then
-      temp=$temp$colName
+    if [[ $i == $colnum ]]; then
+      temp=$temp$colname
     else
-      temp=$temp$colName$sep
+      if [[ $i -eq $colnum ]]; then
+      temp=$temp$colname
+      else
+      temp=$temp$colname$sep
+      fi
     fi
-    ((counter++))
+    ((i++))
   done
-  touch .$tableName
-  echo -e $metaData  >> .$tableName
-  touch $tableName
-  echo -e $temp >> $tableName
+  touch .$tabname.meta
+  echo -e $metaData  >> .$tabname.meta
+  touch $tabname
+  echo -e $temp >> $tabname
   if [[ $? == 0 ]]
   then
-    echo "Table Created Successfully"
+    echo "Table created successfully"
   else
-    echo "Error Creating Table $tableName"
+    echo "Error creating table $tabname"
   fi
