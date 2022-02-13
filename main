@@ -1,30 +1,29 @@
 #!/bin/bash
-
 mkdir DBMS 2>> ./.error.log
-clear
-echo "Welcome To DBMS"
 
-function mainMenu {
-  echo -e "\n+---------Main Menu-------------+"
-  echo "| 1. Select DB                  |"
-  echo "| 2. Create DB                  |"
-  echo "| 3. Rename DB                  |"
-  echo "| 4. Drop DB                    |"
-  echo "| 5. Show DBs                   |"
-  echo "| 6. Exit                       |"
-  echo "+-------------------------------+"
-  echo -e "Enter Choice: \c"
-  read ch
-  case $ch in
-    1)  selectDB ;;
-    2)  createDB ;;
+#   echo -e "\n+---------Main Menu-------------+"
+#   echo "| 1. Select DB                  |"
+#   echo "| 2. Create DB                  |"
+#   echo "| 3. Rename DB                  |"
+#   echo "| 4. Drop DB                    |"
+#   echo "| 5. Show DBs                   |"
+#   echo "| 6. Exit                       |"
+#   echo "+-------------------------------+"
+#   echo -e "Enter Choice: \c"
+#   read ch
+
+  select element in "Create Database" "List Database" "Drop Database" "Connect to Database"
+do 
+   case $ch in
+    1)  bash ./dbfunc/dbls ;;
+    2)  bash ./dbfunc/dbcr; bash main ;;
     3)  renameDB ;;
     4)  dropDB ;;
     5)  ls ./DBMS ; mainMenu;;
     6) exit ;;
     *) echo " Wrong Choice " ; mainMenu;
   esac
-}
+done
 
 function tablesMenu {
   echo -e "\n+--------Tables Menu------------+"
@@ -54,3 +53,4 @@ function tablesMenu {
   esac
 
 }
+

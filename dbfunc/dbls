@@ -1,5 +1,3 @@
 #!/bin/bash
-function listDB {
-ls ./DBMS 
-mainMenu
-}
+ls -1 DBMS/ 
+bash main
