@@ -7,7 +7,6 @@
   if [[ $fid == "" ]]
   then
     echo "Not Found"
-    tablesMenu
   else
     echo -e "Enter Condition Value: \c"
     read val
@@ -15,7 +14,6 @@
     if [[ $res == "" ]]
     then
       echo "Value Not Found"
-      tablesMenu
     else
       echo -e "Enter FIELD name to set: \c"
       read setField
@@ -23,7 +21,6 @@
       if [[ $setFid == "" ]]
       then
         echo "Not Found"
-        tablesMenu
       else
         echo -e "Enter new Value to set: \c"
         read newValue
@@ -32,7 +29,6 @@
         echo $oldValue
         sed -i ''$NR's/'$oldValue'/'$newValue'/g' $tName 2>>./.error.log
         echo "Row Updated Successfully"
-        tablesMenu
       fi
     fi
   fi

@@ -7,7 +7,7 @@
   fi
   colsNum=`awk 'END{print NR}' .$tableName`
   sep=":"
-  rSep="\n"
+  rowsep="\n"
   for (( i = 2; i <= $colsNum; i++ )); do
     colName=$(awk 'BEGIN{FS=":"}{ if(NR=='$i') print $1}' .$tableName)
     colType=$( awk 'BEGIN{FS=":"}{if(NR=='$i') print $2}' .$tableName)
@@ -38,7 +38,7 @@
 
     #Set row
     if [[ $i == $colsNum ]]; then
-      row=$row$data$rSep
+      row=$row$data$rowsep
     else
       row=$row$data$sep
     fi

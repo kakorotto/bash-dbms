@@ -7,7 +7,6 @@
   if [[ $fid == "" ]]
   then
     echo "Not Found"
-    tablesMenu
   else
     echo -e "Enter Condition Value: \c"
     read val
@@ -15,11 +14,9 @@
     if [[ $res == "" ]]
     then
       echo "Value Not Found"
-      tablesMenu
     else
       NR=$(awk 'BEGIN{FS=":"}{if ($'$fid'=="'$val'") print NR}' $tName 2>>./.error.log)
       sed -i ''$NR'd' $tName 2>>./.error.log
       echo "Row Deleted Successfully"
-      tablesMenu
     fi
   fi

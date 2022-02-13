@@ -2,16 +2,16 @@
 PS3="Select a choice: "
 echo tabmenu
 pwd
-select tabselector in "Show Existing Tables " "Create New Table" "Select From Table" "Select From Table" "Update Table" "Delete From Table" "Drop Table" "Back To Main Menu" "Exit"
+select tabselector in "Create Table" "List Tables" "Drop Table" "Insert into Table" "Select From Table" "Delete From Table" "Update Table" "Back To Main Menu" "Exit"
 do 
   case $REPLY in
-    1) bash ../../tabfunc/tabls  ;bash ../../tabsmenu ;;
-    2) bash ../../tabfunc/tabadd ;bash ../../tabsmenu ;;
-    3) bash ../../tabfunc/tabins ;bash ../../tabsmenu ;;
-    4) bash ../../tabfunc/tabsel ;bash ../../tabsmenu ;;
-    5) bash ../../tabfunc/tabupd ;bash ../../tabsmenu ;;
+    1) bash ../../tabfunc/tabcrt ;bash ../../tabsmenu ;;
+    2) bash ../../tabfunc/tablis ;bash ../../tabsmenu ;;
+    3) bash ../../tabfunc/tabdrp ;bash ../../tabsmenu ;;
+    4) bash ../../tabfunc/tabins ;bash ../../tabsmenu ;;
+    5) bash ../../tabfunc/tabsel ;bash ../../tabsmenu ;;
     6) bash ../../tabfunc/tabdel ;bash ../../tabsmenu ;;
-    7) bash ../../tabfunc/tabdrp ;bash ../../tabsmenu ;;
+    7) bash ../../tabfunc/tabupd ;bash ../../tabsmenu ;;
     8) cd ../../ ; bash main ;;
     9) exit ;;
     *) echo " Wrong Choice " ; tabsmenu;

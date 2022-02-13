@@ -7,15 +7,14 @@ pwd
 # read ch
   
 PS3="Select a choice: "
-  select dbselector in "List Database" "Create Database" "Drop Database" "Connect Database" "exit"
+  select dbselector in "Create Database" "List Database" "Connect Database" "Drop Database" "exit"
 do  
-
    case $REPLY in
-    1) bash ./dbfunc/dbls ;;
-    2) bash ./dbfunc/dbcr ;;
-    3) bash ./dbfunc/dbdrp ;;
-    4) bash ./dbfunc/dbcnn ;;
+    1) bash ./dbfunc/dbcr ;;
+    2) bash ./dbfunc/dbls ;;
+    3) bash ./dbfunc/dbcnn ;;
+    4) bash ./dbfunc/dbdrp ;;
     5) exit ;;
-    *) echo " Wrong Choice " ; mainMenu;
+    *) echo " Wrong Choice " ; bash main ;;
   esac
 done

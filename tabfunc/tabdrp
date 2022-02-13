@@ -8,4 +8,3 @@
   else
     echo "Error Dropping Table $tName"
   fi
-  tablesMenu
