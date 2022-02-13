@@ -9,12 +9,14 @@ mkdir DBMS 2>> ./.error.log
 #   echo "| 5. Show DBs                   |"
 #   echo "| 6. Exit                       |"
 #   echo "+-------------------------------+"
-#   echo -e "Enter Choice: \c"
-#   read ch
+#  echo -e "Enter Choice: \c"
+# read ch
+  
 
   select element in "Create Database" "List Database" "Drop Database" "Connect to Database"
-do 
-   case $ch in
+do  
+
+   case $REPLY in
     1)  bash ./dbfunc/dbls ;;
     2)  bash ./dbfunc/dbcr; bash main ;;
     3)  renameDB ;;
